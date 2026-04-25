@@ -27,7 +27,6 @@ window.ROF_SELECTORS = [
 
   // ── Pull Request: Delete branch (post-merge prompt) ─────────────────────
   { selector: '.post-merge-message button[type="submit"]',    label: 'Delete branch (post-merge)' },
-  { selector: 'button[aria-label="Delete branch"]',           label: 'Delete branch' },
 
   // ── Branches list: Delete branch buttons ────────────────────────────────
   { selector: 'button[aria-label*="Delete branch"]',          label: 'Delete branch (branch list)' },
@@ -50,8 +49,6 @@ window.ROF_SELECTORS = [
   { selector: 'button[aria-label*="Cancel workflow"]',        label: 'Cancel workflow' },
 
   // ── Web editor: Commit changes ───────────────────────────────────────────
-  // Dialog "Commit changes" button (web editor)
-  { selector: 'button[data-hotkey="Meta+Enter"]',             label: 'Commit changes (web editor)' },
   { selector: '.commit-form-actions button[type="submit"]',   label: 'Commit changes (form)' },
 ];
 
