@@ -42,7 +42,9 @@ function scheduleMidnightAlarm() {
     now.getDate() + 1,
     0, 0, 1 // 1 second past midnight to avoid edge cases
   );
-  chrome.alarms.create('midnight-check', { when: midnight.getTime() });
+  chrome.alarms.clear('midnight-check', () => {
+    chrome.alarms.create('midnight-check', { when: midnight.getTime() });
+  });
 }
 
 // --- Lifecycle ---
