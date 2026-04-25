@@ -1,3 +1,32 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>ROF Options</title></head>
-<body><p>Loading...</p></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read Only Fridays — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="prompt">$</span> read_only_fridays <span class="cursor">_</span>
+    </div>
+    <h1>// Settings</h1>
+    <p class="subtitle">Which days of the week should be read-only? Changes save instantly.</p>
+
+    <div class="section">
+      <h2>Read-only days</h2>
+      <div class="days-grid" id="days-grid">
+        <!-- Populated by options.js -->
+      </div>
+    </div>
+
+    <p class="note">
+      State updates at midnight or when the browser starts.<br>
+      To force an immediate update: open the extension's service worker DevTools console and run<br>
+      <code>chrome.storage.local.set({ debugForceActive: true })</code>
+    </p>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
