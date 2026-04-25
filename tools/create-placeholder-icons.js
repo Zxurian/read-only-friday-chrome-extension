@@ -3,6 +3,7 @@
 // Run once: node tools/create-placeholder-icons.js
 // Then replace with proper icons from tools/generate-icons.html
 const fs = require('fs');
+const path = require('path');
 const zlib = require('zlib');
 
 function createMinimalPNG(width, height, r, g, b) {
@@ -52,10 +53,12 @@ function createMinimalPNG(width, height, r, g, b) {
   return Buffer.concat([sig, chunk('IHDR', ihdr), idat, iend]);
 }
 
-fs.mkdirSync('icons', { recursive: true });
+const iconsDir = path.join(__dirname, '..', 'icons');
+fs.mkdirSync(iconsDir, { recursive: true });
 [16, 48, 128].forEach(size => {
   const png = createMinimalPNG(size, size, 26, 26, 46); // #1a1a2e
-  fs.writeFileSync(`icons/icon-${size}.png`, png);
-  console.log(`Created icons/icon-${size}.png (${size}x${size} placeholder)`);
+  const outPath = path.join(iconsDir, 'icon-' + size + '.png');
+  fs.writeFileSync(outPath, png);
+  console.log(`Created ${outPath} (${size}x${size} placeholder)`);
 });
 console.log('Done. Replace with proper icons from tools/generate-icons.html');
