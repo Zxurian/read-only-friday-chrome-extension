@@ -1,1 +1,51 @@
-/* Read Only Fridays — content styles (stub) */
+/* content/content-style.css */
+
+/* ── Banner ──────────────────────────────────────────────────────────────── */
+
+#rof-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  z-index: 10000;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Friday / read-only active — red bottom border */
+#rof-banner.rof-banner--active {
+  background-color: #1a1a2e;
+  color: #e8e8e8;
+  border-bottom: 2px solid #dc3545;
+}
+
+/* Override active — yellow bottom border (danger, but chosen) */
+#rof-banner.rof-banner--override {
+  background-color: #1a1a2e;
+  color: #e8e8e8;
+  border-bottom: 2px solid #ffc107;
+}
+
+.rof-banner__text {
+  flex: 1;
+  letter-spacing: 0.02em;
+}
+
+.rof-banner__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0 0 12px;
+  transition: color 0.15s;
+}
+
+.rof-banner__close:hover {
+  color: #e8e8e8;
+}
