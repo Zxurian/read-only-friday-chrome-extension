@@ -30,6 +30,9 @@
   // Debounce timer handle for MutationObserver
   let mutationTimer = null;
 
+  // Tracks whether the MutationObserver has been started
+  var observerStarted = false;
+
   // ── Element disable / enable ──────────────────────────────────────────────
 
   function disableElements() {
@@ -135,6 +138,7 @@
 
   function startObserver() {
     observer.observe(document.body, { childList: true, subtree: true });
+    observerStarted = true;
   }
 
   // ── Storage change listener ───────────────────────────────────────────────
@@ -149,6 +153,7 @@
     if (changes.overrideActive !== undefined) {
       overrideActive = changes.overrideActive.newValue;
     }
+    if (!observerStarted) { startObserver(); }
     applyState();
   });
 
@@ -160,6 +165,7 @@
       // The storage.onChanged listener will catch the first state write.
       return;
     }
+    if (!response) return;
     isReadOnly = response.isReadOnly;
     overrideActive = response.overrideActive;
     applyState();
