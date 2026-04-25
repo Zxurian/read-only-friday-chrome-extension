@@ -1,1 +1,142 @@
-/* stub */
+/* popup/popup.css */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 300px;
+  min-height: 160px;
+  background: #1a1a2e;
+  color: #e8e8e8;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 13px;
+  padding: 20px 18px 18px;
+  user-select: none;
+}
+
+/* ── Screen management ───────────────────────────────────────────────────── */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.screen.hidden {
+  display: none;
+}
+
+/* ── Common elements ─────────────────────────────────────────────────────── */
+
+.icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+h1 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #c792ea;
+}
+
+.tagline {
+  font-size: 12px;
+  color: #a9b7c6;
+}
+
+.guilt {
+  font-size: 12px;
+  color: #ffcb6b;
+  max-width: 240px;
+}
+
+.site-status {
+  font-size: 11px;
+  color: #546e7a;
+  margin-top: 2px;
+}
+
+/* ── Status badge ────────────────────────────────────────────────────────── */
+
+.status-badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+
+.status-badge--off {
+  background: #12122a;
+  color: #546e7a;
+  border: 1px solid #2a2a4a;
+}
+
+.status-badge--on {
+  background: #12122a;
+  color: #ffc107;
+  border: 1px solid #ffc107;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+
+.btn {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  letter-spacing: 0.03em;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--subtle {
+  background: #12122a;
+  color: #546e7a;
+  border: 1px solid #2a2a4a;
+  margin-top: 4px;
+}
+
+.btn--subtle:hover {
+  color: #a9b7c6;
+  border-color: #4a4a6a;
+  opacity: 1;
+}
+
+.btn--green {
+  background: #1b5e20;
+  color: #a5d6a7;
+}
+
+.btn--red {
+  background: #b71c1c;
+  color: #ffcdd2;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* ── All Clear — day info ────────────────────────────────────────────────── */
+
+.days-info {
+  font-size: 11px;
+  color: #546e7a;
+  margin-top: 2px;
+}

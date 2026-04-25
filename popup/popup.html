@@ -1,3 +1,53 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>ROF</title></head>
-<body><p>Loading...</p></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read Only Fridays</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- State 1: Read-only day, no override -->
+  <div id="screen-active" class="screen hidden">
+    <div class="icon">🔒</div>
+    <h1>READ ONLY FRIDAY</h1>
+    <p class="tagline">It's Friday. Touch nothing.</p>
+    <div class="status-badge status-badge--off">🐕‍🦺 &ldquo;This is fine&rdquo; mode: <strong>OFF</strong></div>
+    <div class="site-status">github.com — Destructive actions disabled</div>
+    <button id="btn-show-prompt" class="btn btn--subtle">⚠️ Override (you sure?)</button>
+  </div>
+
+  <!-- State 2: Sarcastic override prompt -->
+  <div id="screen-prompt" class="screen hidden">
+    <div class="icon">🫵😤</div>
+    <h1>Really? On a FRIDAY?</h1>
+    <p class="guilt">An on-call engineer is about to have their weekend ruined.</p>
+    <p class="guilt">A weekend incident is entering the chat.</p>
+    <div class="btn-row">
+      <button id="btn-nevermind" class="btn btn--green">🧘 Nevermind</button>
+      <button id="btn-choose-violence" class="btn btn--red">🔥 I Choose Violence</button>
+    </div>
+  </div>
+
+  <!-- State 3: Override active -->
+  <div id="screen-overridden" class="screen hidden">
+    <div class="icon">🔓</div>
+    <h1>THIS IS FINE 🐕‍🦺🔥</h1>
+    <p class="tagline">Override active. You chose this.</p>
+    <div class="status-badge status-badge--on">🐕‍🦺 &ldquo;This is fine&rdquo; mode: <strong>ON</strong></div>
+    <div class="site-status">All actions re-enabled</div>
+    <button id="btn-relock" class="btn btn--subtle">🔒 Come to my senses</button>
+  </div>
+
+  <!-- State 4: Not a read-only day -->
+  <div id="screen-clear" class="screen hidden">
+    <div class="icon">🟢</div>
+    <h1>ALL CLEAR</h1>
+    <p class="tagline">It's not a read-only day. Ship it.</p>
+    <div class="days-info" id="days-info"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
