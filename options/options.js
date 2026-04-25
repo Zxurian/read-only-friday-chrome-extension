@@ -17,6 +17,7 @@ function init() {
   chrome.storage.sync.get({ readOnlyDays: [5] }, function (result) {
     var readOnlyDays = result.readOnlyDays;
     var grid = document.getElementById('days-grid');
+    grid.innerHTML = '';  // clear before populating to prevent duplicates on re-init
 
     DAYS.forEach(function (day) {
       var labelEl = document.createElement('label');
@@ -43,7 +44,14 @@ function saveSettings() {
   var checked = Array.from(
     document.querySelectorAll('#days-grid input[type="checkbox"]:checked')
   ).map(function (el) { return Number(el.value); });
-  chrome.storage.sync.set({ readOnlyDays: checked });
+
+  chrome.storage.sync.set({ readOnlyDays: checked }).catch(function () {
+    var note = document.querySelector('.note');
+    if (note) {
+      note.textContent = '⚠️ Failed to save settings. Please try again.';
+      note.style.color = '#ff6b6b';
+    }
+  });
 }
 
 init();
