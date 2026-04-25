@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Read Only Fridays Icons</title>
+  <style>
+    body { font-family: monospace; background: #1a1a2e; color: #e8e8e8; padding: 24px; }
+    button { background: #6e40c9; color: #fff; border: none; padding: 12px 24px; font-size: 16px; cursor: pointer; border-radius: 4px; }
+    canvas { display: block; margin: 8px 0; image-rendering: pixelated; }
+  </style>
+</head>
+<body>
+  <h2>// generate_icons.html</h2>
+  <button onclick="generateAll()">Generate + Download Icons</button>
+  <div id="canvases"></div>
+  <script>
+    function drawLock(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillRect(0, 0, size, size);
+      ctx.beginPath();
+      ctx.arc(size / 2, size * 0.42, size * 0.22, Math.PI, 0);
+      ctx.lineWidth = size * 0.1;
+      ctx.strokeStyle = '#6e40c9';
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      const bx = size * 0.22, by = size * 0.48;
+      const bw = size * 0.56, bh = size * 0.42, br = size * 0.08;
+      ctx.beginPath();
+      ctx.roundRect(bx, by, bw, bh, br);
+      ctx.fillStyle = '#6e40c9';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(size / 2, size * 0.65, size * 0.08, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fill();
+    }
+
+    function downloadCanvas(canvas, filename) {
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = filename;
+      a.click();
+    }
+
+    function generateAll() {
+      const container = document.getElementById('canvases');
+      container.innerHTML = '';
+      [16, 48, 128].forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = size;
+        canvas.style.width = canvas.style.height = Math.max(size, 64) + 'px';
+        drawLock(canvas, size);
+        const label = document.createElement('p');
+        label.textContent = `icon-${size}.png`;
+        container.appendChild(label);
+        container.appendChild(canvas);
+        downloadCanvas(canvas, `icon-${size}.png`);
+      });
+    }
+  </script>
+</body>
+</html>
