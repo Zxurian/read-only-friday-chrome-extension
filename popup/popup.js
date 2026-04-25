@@ -21,6 +21,13 @@ function init() {
   ]).then(function (results) {
     var state = results[0];
     var syncResult = results[1];
+
+    if (!state) {
+      // Service worker returned undefined — fail closed (locked)
+      showScreen('screen-active');
+      return;
+    }
+
     var isReadOnly = state.isReadOnly;
     var overrideActive = state.overrideActive;
     var readOnlyDays = syncResult.readOnlyDays;
@@ -39,10 +46,9 @@ function init() {
     } else {
       showScreen('screen-active');
     }
-  }).catch(function (err) {
-    // Fallback: show clear state if we can't read state
-    document.getElementById('days-info').textContent = 'Unable to read state.';
-    showScreen('screen-clear');
+  }).catch(function () {
+    // Fail closed — show locked state if state can't be read
+    showScreen('screen-active');
   });
 }
 
@@ -51,6 +57,7 @@ function init() {
 // State 1 → State 2
 document.getElementById('btn-show-prompt').addEventListener('click', function () {
   showScreen('screen-prompt');
+  document.getElementById('btn-nevermind').focus();
 });
 
 // State 2 → State 1 (changed mind)
@@ -60,18 +67,20 @@ document.getElementById('btn-nevermind').addEventListener('click', function () {
 
 // State 2 → State 3 (confirmed override)
 document.getElementById('btn-choose-violence').addEventListener('click', function () {
-  chrome.storage.session.set({ overrideActive: true }).then(function () {
-    showScreen('screen-overridden');
-  });
+  chrome.storage.session.set({ overrideActive: true })
+    .then(function () { showScreen('screen-overridden'); })
+    .catch(function () { showScreen('screen-active'); });
 });
 
 // State 3 → State 1 (re-lock)
 document.getElementById('btn-relock').addEventListener('click', function () {
-  chrome.storage.session.set({ overrideActive: false }).then(function () {
-    showScreen('screen-active');
-  });
+  chrome.storage.session.set({ overrideActive: false })
+    .then(function () { showScreen('screen-active'); })
+    .catch(function () { showScreen('screen-overridden'); });
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────
 
 init();
+
+// Created by Claude claude-sonnet-4-6 via rickg@unikavaev.com
