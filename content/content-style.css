@@ -1,5 +1,7 @@
 /* content/content-style.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Mono:wght@400;600;700&display=swap');
+
 /* ── Banner ──────────────────────────────────────────────────────────────── */
 
 #rof-banner {
@@ -7,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-family: 'Noto Sans Mono', monospace;
   font-size: 13px;
   line-height: 1.5;
   z-index: 10000;

@@ -15,6 +15,11 @@ function showScreen(id) {
 // ── Initialization ────────────────────────────────────────────────────────
 
 function init() {
+  // Fill in the real current day name — the HTML ships with a placeholder.
+  var todayName = DAY_NAMES[new Date().getDay()];
+  document.getElementById('day-name-heading').textContent = todayName.toUpperCase();
+  document.getElementById('day-name-tagline').textContent = todayName;
+
   Promise.all([
     chrome.runtime.sendMessage({ type: 'getState' }),
     chrome.storage.sync.get({ readOnlyDays: [5] }),
