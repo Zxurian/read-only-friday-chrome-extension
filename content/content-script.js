@@ -190,6 +190,19 @@
     applyState();
   });
 
+  // ── Direct message listener ───────────────────────────────────────────────
+  // chrome.storage.session onChanged doesn't reliably fire in content scripts,
+  // so the popup messages us directly when the override state changes.
+  // This ensures buttons are re-enabled immediately without a page reload.
+
+  chrome.runtime.onMessage.addListener(function (message) {
+    if (message.type !== 'rofStateChanged') return;
+    if (message.isReadOnly !== undefined) isReadOnly = message.isReadOnly;
+    if (message.overrideActive !== undefined) overrideActive = message.overrideActive;
+    if (!observerStarted) { startObserver(); }
+    applyState();
+  });
+
   // ── Initialization ────────────────────────────────────────────────────────
 
   chrome.runtime.sendMessage({ type: 'getState' }, function (response) {

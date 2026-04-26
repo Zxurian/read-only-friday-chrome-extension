@@ -65,17 +65,36 @@ document.getElementById('btn-nevermind').addEventListener('click', function () {
   showScreen('screen-active');
 });
 
+// Notify the content script on the active tab that override state changed.
+// chrome.storage.session onChanged doesn't reliably fire in content script
+// contexts, so we message directly. Errors are suppressed — the tab may not
+// have the content script injected (e.g. a non-GitHub tab).
+function notifyActiveTab(changes) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (!tabs[0]) return;
+    chrome.tabs.sendMessage(tabs[0].id, { type: 'rofStateChanged', ...changes }, function () {
+      void chrome.runtime.lastError; // suppress "no receiving end" error
+    });
+  });
+}
+
 // State 2 → State 3 (confirmed override)
 document.getElementById('btn-choose-violence').addEventListener('click', function () {
   chrome.storage.session.set({ overrideActive: true })
-    .then(function () { showScreen('screen-overridden'); })
+    .then(function () {
+      notifyActiveTab({ overrideActive: true });
+      showScreen('screen-overridden');
+    })
     .catch(function () { showScreen('screen-active'); });
 });
 
 // State 3 → State 1 (re-lock)
 document.getElementById('btn-relock').addEventListener('click', function () {
   chrome.storage.session.set({ overrideActive: false })
-    .then(function () { showScreen('screen-active'); })
+    .then(function () {
+      notifyActiveTab({ overrideActive: false });
+      showScreen('screen-active');
+    })
     .catch(function () { showScreen('screen-overridden'); });
 });
 
