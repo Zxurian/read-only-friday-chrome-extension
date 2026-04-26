@@ -52,12 +52,17 @@ window.ROF_SELECTORS = [
   { selector: '.release .btn-danger',                         label: 'Delete release (legacy)' },
 
   // ── Settings: Danger zone ────────────────────────────────────────────────
-  // PRC UI: danger zone buttons now use Button--danger class (not btn-danger in .Box--danger).
+  // PRC UI: danger zone elements now use Button--danger class (not btn-danger in .Box--danger).
   // Button--danger is GitHub's semantic class for all genuinely destructive actions.
+  // No tag restriction — "Transfer" is an <a> element, not a <button>.
+  // Pointer-events + opacity disabling is sufficient for <a> elements (mouse clicks blocked).
   // Validated against live GitHub DOM 2026-04-25.
-  { selector: 'button.Button--danger',                        label: 'Danger zone action' },
-  // Legacy fallback (pre-PRC settings UI)
-  { selector: '.Box--danger .btn-danger',                     label: 'Danger zone action (legacy)' },
+  { selector: '.Button--danger',                              label: 'Danger zone action' },
+  // Legacy: "Disable branch protection rules" and other in-dialog confirmation buttons
+  // use btn-danger class (not Button--danger). Validated 2026-04-25.
+  { selector: 'button.btn-danger',                            label: 'Danger zone action (legacy btn-danger)' },
+  // Older legacy fallback (pre-PRC settings UI)
+  { selector: '.Box--danger .btn-danger',                     label: 'Danger zone action (legacy box)' },
   { selector: '.Box--danger button[type="submit"]',           label: 'Danger zone submit (legacy)' },
 
   // ── Actions: Re-run / Cancel workflow ───────────────────────────────────
