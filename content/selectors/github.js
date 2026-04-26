@@ -8,6 +8,13 @@
 // When a selector stops matching, open GitHub DevTools, find the button,
 // and update the selector. Prefer aria-label, data-testid, and name
 // attributes over class names — they are more stable across redesigns.
+//
+// GitHub uses two button systems:
+//   PRC (Primer React Components) — data-variant="primary|danger|invisible", CSS module class names
+//   Legacy — btn-primary, btn-danger, form[type="submit"] class names
+// Selectors here target both where needed.
+//
+// NOTE: :has() requires Chrome 105+ (released Aug 2022). Safe for MV3 extensions.
 
 window.ROF_SELECTORS = [
   // ── Pull Request: Merge variants ────────────────────────────────────────
@@ -27,27 +34,44 @@ window.ROF_SELECTORS = [
   { selector: '.post-merge-message button[type="submit"]',    label: 'Delete branch (post-merge)' },
 
   // ── Branches list: Delete branch buttons ────────────────────────────────
-  { selector: 'button[aria-label*="Delete branch"]',          label: 'Delete branch (branch list)' },
+  // PRC UI: delete buttons use aria-labelledby (not aria-label), no data-testid.
+  // Scoped to BranchActionMenu component; identified by octicon-trash icon.
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: '[class*="BranchActionMenu-module"] button:has(svg.octicon-trash)', label: 'Delete branch (branch list)' },
+  // Legacy fallback: aria-label was used in pre-PRC branch list
+  { selector: 'button[aria-label*="Delete branch"]',          label: 'Delete branch (branch list, legacy)' },
 
   // ── Releases: Publish release ────────────────────────────────────────────
-  { selector: 'button[name="release_action"][value="publish"]', label: 'Publish release' },
-  // Legacy releases page submit
-  { selector: 'form.new_release button[type="submit"]',       label: 'Publish release (form)' },
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: 'button[publish-release="true"]',               label: 'Publish release' },
+  // Legacy fallback
+  { selector: 'button[name="release_action"][value="publish"]', label: 'Publish release (legacy)' },
 
   // ── Releases: Delete release ─────────────────────────────────────────────
-  { selector: '.release .btn-danger',                         label: 'Delete release' },
   { selector: 'button[aria-label*="Delete release"]',         label: 'Delete release' },
+  { selector: '.release .btn-danger',                         label: 'Delete release (legacy)' },
 
   // ── Settings: Danger zone ────────────────────────────────────────────────
-  { selector: '.Box--danger .btn-danger',                     label: 'Danger zone action' },
-  { selector: '.Box--danger button[type="submit"]',           label: 'Danger zone submit' },
+  // PRC UI: danger zone buttons now use Button--danger class (not btn-danger in .Box--danger).
+  // Button--danger is GitHub's semantic class for all genuinely destructive actions.
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: 'button.Button--danger',                        label: 'Danger zone action' },
+  // Legacy fallback (pre-PRC settings UI)
+  { selector: '.Box--danger .btn-danger',                     label: 'Danger zone action (legacy)' },
+  { selector: '.Box--danger button[type="submit"]',           label: 'Danger zone submit (legacy)' },
 
   // ── Actions: Re-run / Cancel workflow ───────────────────────────────────
   { selector: 'button[aria-label*="Re-run"]',                 label: 'Re-run workflow' },
   { selector: 'button[aria-label*="Cancel workflow"]',        label: 'Cancel workflow' },
 
-  // ── Web editor: Commit changes ───────────────────────────────────────────
-  { selector: '.commit-form-actions button[type="submit"]',   label: 'Commit changes (form)' },
+  // ── Web editor / Actions workflow: Commit changes ────────────────────────
+  // PRC BlobEditor (web editor + Actions workflow configure): the "Commit changes..."
+  // primary button opens the commit dialog. Disabling it blocks the full flow.
+  // Uses CSS module prefix [class*="BlobEditor"] which is stable across hash changes.
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: '[class*="BlobEditor"] button[data-variant="primary"]', label: 'Commit changes (web editor)' },
+  // Legacy fallback
+  { selector: '.commit-form-actions button[type="submit"]',   label: 'Commit changes (legacy form)' },
 ];
 
 // Created by Claude claude-sonnet-4-6 via rickg@unikavaev.com
