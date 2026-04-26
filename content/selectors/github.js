@@ -11,15 +11,13 @@
 
 window.ROF_SELECTORS = [
   // ── Pull Request: Merge variants ────────────────────────────────────────
-  // The main merge button (may be split-button trigger or direct submit)
-  { selector: 'button[data-testid="merge-button"]',           label: 'Merge pull request' },
-  { selector: 'button[aria-label="Merge pull request"]',      label: 'Merge pull request' },
-  { selector: '.merge-box button[type="submit"]',             label: 'Merge pull request (form submit)' },
-  // Squash and rebase variants inside the split-button dropdown
-  { selector: 'button[data-testid="squash-merge-button"]',    label: 'Squash and merge' },
-  { selector: 'button[data-testid="rebase-merge-button"]',    label: 'Rebase and merge' },
-  { selector: 'button[aria-label="Squash and merge"]',        label: 'Squash and merge' },
-  { selector: 'button[aria-label="Rebase and merge"]',        label: 'Rebase and merge' },
+  // GitHub's PRC (Primer React) merge box — all merge variants (merge, squash, rebase)
+  // are primary buttons inside the mergebox-border-container.
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: '[data-testid="mergebox-border-container"] button[data-variant="primary"]', label: 'Merge pull request' },
+  // Legacy selectors (pre-PRC GitHub UI) kept as fallbacks
+  { selector: 'button[data-testid="merge-button"]',           label: 'Merge pull request (legacy)' },
+  { selector: '.merge-box button[type="submit"]',             label: 'Merge pull request (legacy form)' },
 
   // ── Pull Request: Close PR ───────────────────────────────────────────────
   { selector: 'button[name="comment_and_close"]',             label: 'Close pull request' },
