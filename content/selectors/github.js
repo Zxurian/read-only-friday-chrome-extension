@@ -52,15 +52,18 @@ window.ROF_SELECTORS = [
   { selector: '.release .btn-danger',                         label: 'Delete release (legacy)' },
 
   // ── Settings: Danger zone ────────────────────────────────────────────────
-  // PRC UI: danger zone elements now use Button--danger class (not btn-danger in .Box--danger).
-  // Button--danger is GitHub's semantic class for all genuinely destructive actions.
-  // No tag restriction — "Transfer" is an <a> element, not a <button>.
-  // Pointer-events + opacity disabling is sufficient for <a> elements (mouse clicks blocked).
+  // PRC UI: major destructive actions (Delete, Archive, Change visibility, Transfer)
+  // use Button--danger. No tag restriction — Transfer is an <a> element.
   // Validated against live GitHub DOM 2026-04-25.
   { selector: '.Button--danger',                              label: 'Danger zone action' },
-  // Legacy: "Disable branch protection rules" and other in-dialog confirmation buttons
-  // use btn-danger class (not Button--danger). Validated 2026-04-25.
-  { selector: 'button.btn-danger',                            label: 'Danger zone action (legacy btn-danger)' },
+  // "Disable branch protection rules" trigger uses Button--secondary + color-fg-danger
+  // (secondary-styled button with red text) inside the Box.color-border-danger container.
+  // Different from Button--danger because it is considered a less severe danger zone action.
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: '.Box.color-border-danger button.color-fg-danger', label: 'Danger zone secondary action' },
+  // Confirmation buttons inside danger zone dialogs use legacy btn-danger class.
+  // Validated against live GitHub DOM 2026-04-25.
+  { selector: 'button.btn-danger',                            label: 'Danger zone confirm (legacy btn-danger)' },
   // Older legacy fallback (pre-PRC settings UI)
   { selector: '.Box--danger .btn-danger',                     label: 'Danger zone action (legacy box)' },
   { selector: '.Box--danger button[type="submit"]',           label: 'Danger zone submit (legacy)' },
