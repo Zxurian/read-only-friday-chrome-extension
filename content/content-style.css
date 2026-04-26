@@ -50,3 +50,19 @@
 .rof-banner__close:hover {
   color: #e8e8e8;
 }
+
+/* ── Disabled elements ───────────────────────────────────────────────────── */
+
+/*
+ * Defense-in-depth: enforce pointer-events via CSS so that even if a page's
+ * own JavaScript removes the `disabled` HTML attribute (e.g. GitHub's
+ * data-disable-invalid form validation), the element stays visually locked
+ * and unclickable for as long as data-rof-disabled is present.
+ * The inline styles set by the content script are a best-effort first pass;
+ * this rule is the backstop.
+ */
+[data-rof-disabled] {
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}

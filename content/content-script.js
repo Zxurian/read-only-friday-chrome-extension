@@ -69,6 +69,12 @@
 
   // ── Banner ────────────────────────────────────────────────────────────────
 
+  var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  function currentDayName() {
+    return DAY_NAMES[new Date().getDay()];
+  }
+
   function injectBanner(override) {
     removeBanner();
 
@@ -76,9 +82,10 @@
     bannerEl.id = 'rof-banner';
     bannerEl.className = override ? 'rof-banner--override' : 'rof-banner--active';
 
+    var day = currentDayName();
     var message = override
       ? '🔥 THIS_IS_FINE=true  // You chose violence. Deploy at your own risk.'
-      : '🛑 READ_ONLY_FRIDAY=true  // Fridays are for reading only!';
+      : '🛑 READ_ONLY_' + day.toUpperCase() + '=true  // ' + day + 's are for reading only!';
 
     var span = document.createElement('span');
     span.className = 'rof-banner__text';
@@ -129,15 +136,41 @@
   // ── MutationObserver ──────────────────────────────────────────────────────
   // GitHub is a SPA — new buttons appear after client-side navigation.
   // Re-scan on DOM mutations, debounced to 100ms to avoid thrashing.
+  //
+  // We also watch `disabled` attribute mutations (attributeFilter: ['disabled']).
+  // GitHub's data-disable-invalid form validation removes `disabled` from
+  // submit buttons when the user fills required fields (e.g. "Disable branch
+  // protection rules" dialog). Without this, our mark is present but the
+  // button becomes clickable. Re-adding `disabled` immediately counters this.
+  // The CSS [data-rof-disabled] rule is a second layer of defence.
 
-  var observer = new MutationObserver(function () {
+  var observer = new MutationObserver(function (mutations) {
     if (!isReadOnly || overrideActive) return;
+
+    mutations.forEach(function (mutation) {
+      if (
+        mutation.type === 'attributes' &&
+        mutation.attributeName === 'disabled'
+      ) {
+        var el = mutation.target;
+        // Re-enforce disabled if GitHub stripped it from one of our elements
+        if (el.hasAttribute(DISABLED_ATTR) && !el.hasAttribute('disabled')) {
+          el.setAttribute('disabled', '');
+        }
+      }
+    });
+
     clearTimeout(mutationTimer);
     mutationTimer = setTimeout(disableElements, 100);
   });
 
   function startObserver() {
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['disabled'],
+    });
     observerStarted = true;
   }
 
