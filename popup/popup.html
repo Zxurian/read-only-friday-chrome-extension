@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Read Only Fridays</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -11,8 +14,8 @@
   <!-- State 1: Read-only day, no override -->
   <div id="screen-active" class="screen hidden">
     <div class="icon">🔒</div>
-    <h1>READ ONLY FRIDAY</h1>
-    <p class="tagline">It's Friday. Touch nothing.</p>
+    <h1>READ ONLY <span id="day-name-heading">FRIDAY</span></h1>
+    <p class="tagline">It's <span id="day-name-tagline">Friday</span>. Touch nothing.</p>
     <div class="status-badge status-badge--off">🐕‍🦺 &ldquo;This is fine&rdquo; mode: <strong>OFF</strong></div>
     <div class="site-status">github.com — Destructive actions disabled</div>
     <button id="btn-show-prompt" class="btn btn--subtle">⚠️ Override (you sure?)</button>

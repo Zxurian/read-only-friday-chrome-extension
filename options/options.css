@@ -9,7 +9,7 @@
 body {
   background: #1a1a2e;
   color: #e8e8e8;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-family: 'Noto Sans', sans-serif;
   font-size: 14px;
   min-height: 100vh;
   padding: 40px;
@@ -21,6 +21,7 @@ body {
 
 .header {
   font-size: 12px;
+  font-family: 'Noto Sans Mono', monospace;
   color: #546e7a;
   margin-bottom: 20px;
   letter-spacing: 0.04em;
@@ -115,5 +116,5 @@ h2 {
 
 code {
   color: #ffcb6b;
-  font-family: inherit;
+  font-family: 'Noto Sans Mono', monospace;
 }

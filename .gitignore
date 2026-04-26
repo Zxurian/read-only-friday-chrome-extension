@@ -1,2 +1,5 @@
 # Git worktrees (local development workspaces)
 .worktrees/
+
+# Local sandbox — test repos and scratch work, never committed to main repo
+sandbox/
