@@ -1,0 +1,1 @@
+This file exists to provide a test PR target for the Read Only Fridays extension.
