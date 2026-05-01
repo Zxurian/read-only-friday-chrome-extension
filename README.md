@@ -39,7 +39,3 @@ In the service worker DevTools console (`chrome://extensions` → Details → Se
 ```js
 chrome.storage.local.set({ debugForceActive: true })
 ```
-
----
-
-*Created by Claude claude-sonnet-4-6 via rickg@unikavaev.com*
